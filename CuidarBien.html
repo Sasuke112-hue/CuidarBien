@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CuidarBien - Cuidado Profesional de Personas Mayores</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #2D3436;
+            line-height: 1.6;
+        }
+
+        :root {
+            --primary: #2B7A9E;
+            --primary-dark: #1D5F7A;
+            --primary-light: #E8F4F8;
+            --secondary: #5BAE8D;
+            --secondary-light: #E6F5EF;
+            --accent: #D4A843;
+            --text: #2D3436;
+            --text-light: #636E72;
+            --white: #FFFFFF;
+            --gray-light: #F5F6FA;
+            --gray: #DFE6E9;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.12);
+            --radius: 12px;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 15px rgba(43,122,158,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(43,122,158,0.4);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37,211,102,0.3);
+            font-size: 1.1rem;
+            padding: 16px 36px;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+        }
+
+        .btn-call {
+            background: linear-gradient(135deg, var(--accent), #C49B35);
+            color: white;
+            box-shadow: 0 4px 15px rgba(212,168,67,0.3);
+            font-size: 1.1rem;
+            padding: 16px 36px;
+        }
+
+        .btn-call:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212,168,67,0.4);
+        }
+
+        .header-cta {
+            padding: 10px 22px;
+            font-size: 0.9rem;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+            background: none;
+            border: none;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 140px 24px 80px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--white) 50%, var(--secondary-light) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(43,122,158,0.05) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 2.8rem;
+            color: var(--text);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-text h1 span {
+            color: var(--primary);
+        }
+
+        .hero-text p {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            text-align: center;
+            max-width: 420px;
+        }
+
+        .hero-card-img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-card-body {
+            padding: 28px;
+        }
+
+        .hero-card h3 {
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .hero-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-phone {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 16px;
+        }
+
+        .hero-phone a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .hero-phone a:hover {
+            color: var(--primary-dark);
+        }
+
+        /* Imagenes en tarjetas de servicio */
+        .servicio-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        /* ===== SECCIONES ===== */
+        section {
+            padding: 80px 24px;
+        }
+
+        .section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-title .line {
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+            margin: 16px auto 0;
+        }
+
+        /* ===== SERVICIOS ===== */
+        .servicios {
+            background: var(--gray-light);
+        }
+
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+
+        .servicio-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(30px);
+            overflow: hidden;
+        }
+
+        .servicio-card h3,
+        .servicio-card p {
+            padding: 0 24px;
+        }
+
+        .servicio-card p {
+            padding-bottom: 28px;
+        }
+
+        .servicio-card h3 {
+            padding-top: 20px;
+        }
+
+        .servicio-img {
+            border-radius: 0;
+            margin-bottom: 0;
+        }
+
+        .servicio-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .servicio-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .servicio-icon {
+            font-size: 2.8rem;
+            margin-bottom: 16px;
+        }
+
+        .servicio-card h3 {
+            font-size: 1.15rem;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .servicio-card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* ===== VENTAJAS ===== */
+        .ventajas {
+            background: white;
+        }
+
+        .ventajas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+        }
+
+        .ventaja {
+            text-align: center;
+            padding: 24px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .ventaja.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .ventaja-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 20px;
+        }
+
+        .ventaja h3 {
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .ventaja p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        /* ===== CONTACTO ===== */
+        .contacto {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contacto .section-title h2 {
+            color: white;
+        }
+
+        .contacto .section-title p {
+            color: rgba(255,255,255,0.85);
+        }
+
+        .contacto .section-title .line {
+            background: linear-gradient(90deg, var(--accent), #F0C75E);
+        }
+
+        .contacto-phone {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .contacto-phone a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .contacto-phone a:hover {
+            color: var(--accent);
+        }
+
+        .contacto-sub {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 36px;
+        }
+
+        .contacto-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .contacto-info {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .contacto-info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .contacto-info-item span {
+            font-size: 1.3rem;
+        }
+
+        /* ===== SEGURO ===== */
+        .seguro-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 50px;
+            padding: 12px 28px;
+            font-size: 1rem;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .seguro-badge span {
+            font-size: 1.3rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--text);
+            color: white;
+            padding: 40px 24px 24px;
+            text-align: center;
+        }
+
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        footer .logo {
+            color: white;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        footer .logo-icon {
+            background: rgba(255,255,255,0.2);
+        }
+
+        footer p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+        }
+
+        /* ===== BOTON FLOTANTE WHATSAPP ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+            z-index: 999;
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37,211,102,0.5);
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+            50% { box-shadow: 0 4px 30px rgba(37,211,102,0.6); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-text p { margin: 0 auto 32px; }
+            .hero-buttons { justify-content: center; }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+
+            nav {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                transform: translateY(-120%);
+                transition: transform 0.3s;
+                gap: 4px;
+            }
+
+            nav.active { transform: translateY(0); }
+            nav a { width: 100%; text-align: center; }
+            .header-cta { width: 100%; }
+            .hero-text h1 { font-size: 2rem; }
+            .contacto-phone { font-size: 2.2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero { padding: 110px 16px 60px; }
+            .hero-text h1 { font-size: 1.8rem; }
+            section { padding: 60px 16px; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .hero-buttons .btn { width: 100%; }
+            .contacto-buttons { flex-direction: column; align-items: center; }
+            .contacto-buttons .btn { width: 100%; max-width: 300px; }
+        }
+
+        /* ===== ANIMACIONES ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-inner">
+            <a href="#inicio" class="logo">
+                <div class="logo-icon">&#x2764;</div>
+                CuidarBien
+            </a>
+            <nav id="nav">
+                <a href="#servicios">Que Ofrecemos</a>
+                <a href="#por-que-nosotros">Sobre Nosotras</a>
+                <a href="#contacto" class="btn btn-primary header-cta">Contactar</a>
+            </nav>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+        <div class="hero-inner">
+            <div class="hero-text">
+                <h1>Su familiar tendra el <span>cuidado</span> que requiere</h1>
+                <p>Somos un grupo de cuidadoras profesionales con experiencia en el cuidado de personas mayores, tanto en hospitales como en domicilios. Buenos precios y seguro particular. Contactenos sin compromiso.</p>
+                <div class="hero-buttons">
+                    <a href="tel:631918012" class="btn btn-call">&#x1F4DE; Llamar Ahora</a>
+                    <a href="https://wa.me/34631918012?text=Hola%2C%20me%20gustaria%20informacion%20sobre%20vuestros%20servicios%20de%20cuidado%20de%20personas%20mayores" class="btn btn-whatsapp" target="_blank" rel="noopener">&#x1F4AC; WhatsApp</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-card">
+                    <img src="https://images.pexels.com/photos/8949833/pexels-photo-8949833.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Doctor atendiendo a persona mayor en domicilio" class="hero-card-img">
+                    <div class="hero-card-body">
+                        <h3>Cuidadoras Profesionales</h3>
+                        <p>Rebeca y su equipo: personas con experiencia y vocacion dedicadas al bienestar de su familiar</p>
+                        <div class="hero-phone">
+                            <a href="tel:631918012">631 918 012</a>
+                        </div>
+                        <div class="seguro-badge" style="background: rgba(43,122,158,0.1); border-color: rgba(43,122,158,0.2); color: var(--primary);">
+                            <span>&#x1F6E1;&#xFE0F;</span> Contamos con seguro particular
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="servicios" id="servicios">
+        <div class="section-inner">
+            <div class="section-title">
+                <h2>Que Ofrecemos</h2>
+                <p>Cuidado profesional y cercano donde lo necesite: en hospitales o en la comodidad de su hogar</p>
+                <div class="line"></div>
+            </div>
+            <div class="servicios-grid">
+                <div class="servicio-card fade-in">
+                    <img src="https://images.pexels.com/photos/6129507/pexels-photo-6129507.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Enfermeros en hospital" class="servicio-img">
+                    <h3>Cuidado en Hospitales</h3>
+                    <p>Nos encargamos del acompanamiento y atencion de su familiar durante su estancia hospitalaria. Turnos de dia y noche.</p>
+                </div>
+                <div class="servicio-card fade-in">
+                    <img src="https://images.pexels.com/photos/18459204/pexels-photo-18459204.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Cuidadora con personas mayores en hogar" class="servicio-img">
+                    <h3>Cuidado a Domicilio</h3>
+                    <p>Vamos a su casa para atender a su familiar con carino y profesionalidad, en la comodidad de su propio entorno.</p>
+                </div>
+                <div class="servicio-card fade-in">
+                    <img src="https://images.pexels.com/photos/6129678/pexels-photo-6129678.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Enfermera tomando tension a paciente" class="servicio-img">
+                    <h3>Horarios Flexibles</h3>
+                    <p>Nos adaptamos a lo que usted necesite: mananas, tardes, noches, fines de semana o jornada completa.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- POR QUE NOSOTROS -->
+    <section class="ventajas" id="por-que-nosotros">
+        <div class="section-inner">
+            <div class="section-title">
+                <h2>Por que Confiar en Nosotras</h2>
+                <p>Experiencia, dedicacion y precios accesibles para el cuidado de su ser querido</p>
+                <div class="line"></div>
+            </div>
+            <div class="ventajas-grid">
+                <div class="ventaja fade-in">
+                    <div class="ventaja-icon">&#x1F4B0;</div>
+                    <h3>Buenos Precios</h3>
+                    <p>Ofrecemos tarifas accesibles y transparentes. Le informamos sin compromiso.</p>
+                </div>
+                <div class="ventaja fade-in">
+                    <div class="ventaja-icon">&#x2B50;</div>
+                    <h3>Experiencia</h3>
+                    <p>Contamos con anos de experiencia cuidando personas mayores y dependientes.</p>
+                </div>
+                <div class="ventaja fade-in">
+                    <div class="ventaja-icon">&#x1F6E1;&#xFE0F;</div>
+                    <h3>Seguro Particular</h3>
+                    <p>Disponemos de seguro propio para su total tranquilidad y la de su familia.</p>
+                </div>
+                <div class="ventaja fade-in">
+                    <div class="ventaja-icon">&#x2764;&#xFE0F;</div>
+                    <h3>Trato Cercano</h3>
+                    <p>No somos una empresa, somos personas. Tratamos a su familiar como si fuera de nuestra propia familia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="contacto" id="contacto">
+        <div class="section-inner">
+            <div class="section-title">
+                <h2>Contactenos sin Compromiso</h2>
+                <p>Llamenos o escribanos por WhatsApp. Le atendemos personalmente y le informamos de todo lo que necesite.</p>
+                <div class="line"></div>
+            </div>
+            <div class="contacto-phone">
+                <a href="tel:631918012">631 918 012</a>
+            </div>
+            <div class="contacto-sub">Hable directamente con Rebeca. Le atendera encantada.</div>
+            <div class="contacto-buttons">
+                <a href="tel:631918012" class="btn btn-call">&#x1F4DE; Llamar Ahora</a>
+                <a href="https://wa.me/34631918012?text=Hola%2C%20me%20gustaria%20informacion%20sobre%20vuestros%20servicios%20de%20cuidado%20de%20personas%20mayores" class="btn btn-whatsapp" target="_blank" rel="noopener">&#x1F4AC; Escribir por WhatsApp</a>
+            </div>
+            <div class="seguro-badge">
+                <span>&#x1F6E1;&#xFE0F;</span> Contamos con seguro particular
+            </div>
+            <div class="contacto-info">
+                <div class="contacto-info-item">
+                    <span>&#x1F3E5;</span> Hospitales
+                </div>
+                <div class="contacto-info-item">
+                    <span>&#x1F3E0;</span> Domicilios
+                </div>
+                <div class="contacto-info-item">
+                    <span>&#x1F552;</span> Horarios flexibles
+                </div>
+                <div class="contacto-info-item">
+                    <span>&#x1F465;</span> Particulares y empresas
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <a href="#inicio" class="logo">
+                <div class="logo-icon">&#x2764;</div>
+                CuidarBien
+            </a>
+            <p>Cuidadoras profesionales para personas mayores. Hospitales y domicilios.</p>
+            <p style="margin-top: 8px;">&#x1F4DE; 631 918 012</p>
+            <p style="margin-top: 16px;">&copy; 2026 CuidarBien. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- BOTON FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/34631918012?text=Hola%2C%20me%20gustaria%20informacion%20sobre%20vuestros%20servicios%20de%20cuidado%20de%20personas%20mayores" class="whatsapp-float" target="_blank" rel="noopener" title="Contactar por WhatsApp">&#x1F4AC;</a>
+
+    <script>
+        // Menu hamburguesa
+        document.getElementById('hamburger').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.getElementById('nav').classList.toggle('active');
+        });
+
+        document.querySelectorAll('#nav a').forEach(a => {
+            a.addEventListener('click', () => {
+                document.getElementById('hamburger').classList.remove('active');
+                document.getElementById('nav').classList.remove('active');
+            });
+        });
+
+        // Animaciones scroll
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
